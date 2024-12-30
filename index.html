@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Ghost</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ffccff, #99ccff);
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            padding: 20px;
+            background: #660099;
+            color: white;
+        }
+        .hidden {
+            display: none;
+        }
+        button {
+            background-color: #660099;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background-color: #9933cc;
+        }
+        .game-area, .quiz-area, .wish-area {
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            width: 80%;
+            background: white;
+        }
+        .alien {
+            width: 50px;
+            position: absolute;
+            cursor: pointer;
+        }
+        .message {
+            font-size: 1.5em;
+            color: #660099;
+        }
+        .image-container {
+            display: inline-block;
+            max-width: 100%;
+            max-height: 100%;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        .image-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .glowing-text {
+            font-size: 2em;
+            color: #ff66ff;
+            text-shadow: 0 0 5px #ff66ff, 0 0 10px #ff99ff, 0 0 20px #ffccff;
+            animation: glow 2s infinite alternate;
+        }
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #ff66ff, 0 0 20px #ff99ff, 0 0 40px #ffccff;
+            }
+            to {
+                text-shadow: 0 0 20px #ff66ff, 0 0 40px #ff99ff, 0 0 80px #ffccff;
+            }
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/confetti-js@0.0.18/dist/index.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Radhe-Radhe Miss Pandemic 👻</h1>
+    </header>
+
+    <!-- Welcome Section -->
+    <div id="welcome" class="game-area">
+        <h2>Welcome, Siradard!</h2>
+        <p>Please enter your name to begin:</p>
+        <input type="text" id="name" placeholder="Your Name">
+        <button onclick="startGame()">Start</button>
+        <audio id="voice-note" src="voice_note.mp3" preload="auto"></audio>
+    </div>
+
+    <!-- Game Section -->
+    <div id="game" class="game-area hidden">
+        <h2>Please Catch and Play Miss Pandemic (👻)</h2>
+        <p>Catch 10 aliens to win!</p>
+        <div id="game-field" style="position:relative; width:100%; height:300px; background:#eef;"></div>
+        <p id="score">Score: 0</p>
+        <p class="message hidden">You Won! 🎉</p>
+        <button onclick="goToQuiz()">Next</button>
+    </div>
+
+    <!-- Quiz Section -->
+    <div id="quiz" class="quiz-area hidden">
+        <h2>Quiz Time!</h2>
+        <form id="quiz-form">
+            <div class="question">
+                <p>1. "What is my nickname that you gave me(code😂)?"</p>
+                <input type="text" name="q1" required>
+            </div>
+            <div class="question">
+                <p>2."Whose rent do you need to pay from my side?"</p>
+                <input type="text" name="q2" required>
+            </div>
+            <div class="question">
+                <p>3."What power do you have?"</p>
+                <input type="text" name="q3" required>
+            </div>
+            <div class="question">
+                <p>4. "What do you have to keep?"</p>
+                <input type="text" name="q4" required>
+            </div>
+            <div class="question">
+                <p>5. "Tell me the full name of the king 😂. Try to recall it by forcing our recollection skills."</p>
+                <input type="text" name="q5" required>
+            </div>
+            <button type="button" onclick="checkAnswers()">Submit</button>
+        </form>
+        <p id="quiz-result" class="hidden"></p>
+    </div>
+
+    <!-- Birthday Section -->
+    <div id="birthday" class="hidden">
+        <h2 class="glowing-text">Happy Birthday dear buttercup❣👻</h2>
+        <canvas id="confetti-canvas"></canvas>
+        <div class="image-container">
+            <img src="D:\notes\webcodebd\Gold and Brown Happy Birthday Photo Collage.png" alt="Her Picture">
+        </div>
+        <audio src="D:\notes\webcodebd\WhatsApp Audio 2024-12-24 at 23.29.26_6aa34e76.mp3" preload="auto" controls></audio>
+        <p>"Happy Birthday, dear✨, the catalyst⚡️ for all the positive chemical reactions in my brain."! Wishing you all the love and happiness!</p>
+        <button onclick="goToWishes()">See Hidden Wishes</button>
+    </div>
+
+    <!-- Hidden Wishes Section -->
+    <div id="wishes" class="wish-area hidden">
+        <h1>Hidden Wishes</h1>
+        <button onclick="revealWish(1)">Reveal First Wish</button>
+        <button onclick="revealWish(2)">Reveal Second Wish</button>
+        <button onclick="revealWish(3)">Reveal Third Wish</button>
+        <p id="wish1" class="hidden">First Wish: "Happy birthday 🎉🎂🎈 to you whose life is as intricate and fascinating as the DNA 🧬 that makes us all unique. May your year ahead be full of growth 🌱, new discoveries 🔍, and moments that evolve into unforgettable memories 📸. Just like in biology, may every chapter of your life continue to adapt 🔄 and flourish 🌸."
+     
+ 🎉</p>
+        <p id="wish2" class="hidden">Second Wish:"To my favorite ghostly buddy! 👻💫
+
+From this alien brain of mine 🛸 to your ethereal spirit 👻, you’re the gravitational pull 🌌 that keeps me orbiting in your universe 🌍 [ab ye na bolna ki aapne planet jao {lke remotwa mil gya hai phir bhi}]. If I’m the alien 👽 exploring strange worlds 🌠, you’re the hauntingly mysterious being 👻 I never want to leave. My param mitra, ghost 👻 or pandemic 🦠.
+
+May your day be filled with all the cosmic joy 🌟 and supernatural love 💖 you deserve. Let’s make this year out of this world 🌍 — just like me! 👽-[nhi tum khud dekh lo, hain koi dusra alien, nhi na] 👻"**🌟</p>
+        <p id="wish3" class="hidden">Third Wish: "You possess a rare kind of grace 🌸—one that comes from within, defined by your kindness 💖, wisdom 📚, and the warmth ☀️ you bring to everyone around you. It’s truly a pleasure to know you, and I deeply respect everything you are. I wish for nothing but happiness 😊 and fulfillment 🌟 to follow you in every step you take. Thank you for being you—such an incredible person. I truly hope this year brings you everything you’ve always wished for and more." ❤️
+_________________________________________________________________________________________
+"To the one who fills my days with light 🌞,
+Whose smile makes everything feel so right 😊,
+Today’s your day, a day to shine ✨,
+A gift of joy, forever mine 🎁.
+...................................................
+
+Like a star that brightens the night sky 🌟,
+Your presence lifts me, makes me fly 🕊️.
+In every moment, you’re my muse 🎶,
+A dream come true, I never want to lose 💫.
+...................................................
+
+So here's to you, my heart’s delight 💖,
+May your day be as perfect as our flight 🚀.
+Happy birthday, the one I adore 🥰,
+Grateful for you, forevermore... frnd 👫."</p>
+    </div>
+
+    <script>
+        function startGame() {
+            const name = document.getElementById('name').value;
+            if (name) {
+                alert(`Welcome, ${name}!`);
+                document.getElementById('voice-note').play();
+                document.getElementById('welcome').classList.add('hidden');
+                document.getElementById('game').classList.remove('hidden');
+            } else {
+                alert('Please enter your name!');
+            }
+        }
+
+        // Alien Game Logic
+        let score = 0;
+        const gameField = document.getElementById('game-field');
+        for (let i = 0; i < 10; i++) {
+            const alien = document.createElement('img');
+            alien.src = "file:///D:/notes/webcodebd/alien_1_optimized.png";
+            alien.className = 'alien';
+            alien.style.top = `${Math.random() * 90}%`;
+            alien.style.left = `${Math.random() * 90}%`;
+            alien.onclick = () => {
+                alien.remove();
+                score++;
+                document.getElementById('score').innerText = `Score: ${score}`;
+                if (score >= 10) {
+                    document.querySelector('#game .message').classList.remove('hidden');
+                }
+            };
+            gameField.appendChild(alien);
+        }
+
+        function goToQuiz() {
+            document.getElementById('game').classList.add('hidden');
+            document.getElementById('quiz').classList.remove('hidden');
+        }
+
+        // Quiz Logic
+        function checkAnswers() {
+    const answers = {
+        q1: "ASMRV",
+        q2: "ANTS",
+        q3: "TELEPORTATION",
+        q4: "SMILING",
+        q5: "AKHIL YADAV"
+    };
+
+    const form = document.getElementById('quiz-form');
+    const formData = new FormData(form);
+    let score = 0;
+
+    // Loop through the answers and form data to check the responses
+    for (let [key, value] of formData.entries()) {
+        // Clean the value before comparison (trim spaces and handle case)
+        const cleanedAnswer = value.trim().toUpperCase();
+        const correctAnswer = answers[key].toUpperCase();
+
+        if (cleanedAnswer === correctAnswer) {
+            score++;
+        }
+    }
+
+    const totalQuestions = Object.keys(answers).length;
+    const result = document.getElementById('quiz-result');
+
+    if (score === totalQuestions) {
+        result.textContent = "MISSION SUCCESSFUL! 🎉 Redirecting...";
+        setTimeout(() => {
+            document.getElementById('quiz').classList.add('hidden');
+            document.getElementById('birthday').classList.remove('hidden');
+            startConfetti();
+        }, 2000);
+    } else {
+        result.textContent = `You got ${score} out of ${totalQuestions} correct. Try again!`;
+    }
+    result.classList.remove('hidden');
+}
+
+        // Confetti Effect
+        function startConfetti() {
+            const confettiCanvas = document.getElementById('confetti-canvas');
+            confettiCanvas.style.position = 'absolute';
+            confettiCanvas.style.top = '0';
+            confettiCanvas.style.left = '0';
+            confettiCanvas.style.width = '100%';
+            confettiCanvas.style.height = '100%';
+            confettiCanvas.style.pointerEvents = 'none';
+            confettiCanvas.style.zIndex = '1000';
+
+            const confettiSettings = { target: 'confetti-canvas', max: 150, clock: 25 };
+            const confetti = new ConfettiGenerator(confettiSettings);
+            confetti.render();
+
+            setTimeout(() => {
+                confetti.clear(); // Stop the confetti after 10 seconds
+            }, 10000);
+        }
+
+        // Hidden Wishes
+        function goToWishes() {
+            document.getElementById('birthday').classList.add('hidden');
+            document.getElementById('wishes').classList.remove('hidden');
+        }
+
+        function revealWish(wishNumber) {
+            const wish = document.getElementById('wish' + wishNumber);
+            if (wish) {
+                wish.classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>
